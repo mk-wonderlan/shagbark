@@ -78,10 +78,10 @@ module.exports = (robot) ->
               msg.send "Ok, I am #{newRole}."
             else
               msg.send "Ok, #{name} is #{newRole}."
-              else if users.length > 1
-                msg.send getAmbiguousUserText users
-              else
-                msg.send "I don't know anything about #{name}."
+        else if users.length > 1
+          msg.send getAmbiguousUserText users
+        else
+          msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
     name    = msg.match[1].trim()
@@ -98,10 +98,10 @@ module.exports = (robot) ->
         else
           user.roles = (role for role in user.roles when role isnt newRole)
           msg.send "Ok, #{name} is no longer #{newRole}."
-          else if users.length > 1
-            msg.send getAmbiguousUserText users
-          else
-            msg.send "I don't know anything about #{name}."
+      else if users.length > 1
+        msg.send getAmbiguousUserText users
+      else
+        msg.send "I don't know anything about #{name}."
 
 
   robot.respond /(what role does|what roles does) @?(.+) (have)\?*$/i, (msg) ->
@@ -130,7 +130,7 @@ module.exports = (robot) ->
       msg.reply "The following people have the 'admin' role: #{adminNames.join(', ')}"
     else
       msg.reply "There are no people that have the 'admin' role."
-      
+
   robot.respond /who is @?([\w .\-]+)\?*$/i, (msg) ->
     joiner = ', '
     name = msg.match[1].trim()
