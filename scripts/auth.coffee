@@ -54,12 +54,13 @@ module.exports = (robot) ->
           users.push(user)
       users
 
-    isFriend: (user)->
+    isFriend: (user) ->
       return hasRole(user,'shagbarks friend')
 
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
+      msg.reply "[DEBUG] Entered @?([\w .\-_]+) is ([\"'\w: \-_]+)[.!]*$ regex"
       name    = msg.match[1].trim()
       newRole = msg.match[3].trim().toLowerCase()
       console.log name + newRole
