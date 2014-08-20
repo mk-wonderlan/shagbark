@@ -63,7 +63,7 @@ module.exports = (robot) ->
       msg.reply "[DEBUG] Entered @?([\w .\-_]+) is ([\"'\w: \-_]+)[.!]*$ regex"
       name    = msg.match[1].trim()
       newRole = msg.match[3].trim().toLowerCase()
-      console.log name + newRole
+      msg.reply "[DEBUG] user: #{name} role:#{newRole}"
 
       unless name.toLowerCase() in ['', 'who', 'what', 'where', 'when', 'why']
         user = robot.brain.userForName(name)
