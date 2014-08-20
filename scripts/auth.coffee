@@ -81,7 +81,7 @@ module.exports = (robot) ->
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
       name    = msg.match[1].trim()
-      newRole = msg.match[3].trim().toLowerCase()
+      newRole = msg.match[2].trim().toLowerCase()
 
       unless name.toLowerCase() in ['', 'who', 'what', 'where', 'when', 'why']
         user = robot.brain.userForName(name)
@@ -97,7 +97,7 @@ module.exports = (robot) ->
             msg.reply "Ok, #{name} isn't #{newRole}."
 
   robot.respond /(what role does|what roles does) @?(.+) (have)\?*$/i, (msg) ->
-    name = msg.match[2].trim()
+    name = msg.match[1].trim()
     user = robot.brain.userForName(name)
     return msg.reply "#{name} does not exist" unless user?
     user.roles or= []
@@ -122,3 +122,26 @@ module.exports = (robot) ->
       msg.reply "The following people have the 'admin' role: #{adminNames.join(', ')}"
     else
       msg.reply "There are no people that have the 'admin' role."
+  robot.respond /who is @?([\w .\-]+)\?*$/i, (msg) ->
+    joiner = ', '
+    name = msg.match[1].trim()
+
+    if name is "you"
+      msg.send "Who ain't I?"
+    else if name is robot.name
+      msg.send "The best."
+    else
+      users = robot.brain.usersForFuzzyName(name)
+      if users.length is 1
+        user = users[0]
+        user.roles = user.roles or [ ]
+        if user.roles.length > 0
+          if user.roles.join('').search(',') > -1
+            joiner = '; '
+          msg.send "#{name} is #{user.roles.join(joiner)}."
+        else
+          msg.send "#{name} is nothing to me."
+      else if users.length > 1
+        msg.send getAmbiguousUserText users
+      else
+        msg.send "#{name}? Never heard of 'em"
