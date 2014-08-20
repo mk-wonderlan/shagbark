@@ -60,10 +60,8 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-      msg.reply "[DEBUG] Entered @?([\w .\-_]+) is ([\"'\w: \-_]+)[.!]*$ regex"
       name    = msg.match[1].trim()
-      newRole = msg.match[3].trim().toLowerCase()
-      msg.reply "[DEBUG] user: #{name} role:#{newRole}"
+      newRole = msg.match[2].trim().toLowerCase()
 
       unless name.toLowerCase() in ['', 'who', 'what', 'where', 'when', 'why']
         user = robot.brain.userForName(name)
