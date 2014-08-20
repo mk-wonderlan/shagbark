@@ -130,6 +130,7 @@ module.exports = (robot) ->
       msg.reply "The following people have the 'admin' role: #{adminNames.join(', ')}"
     else
       msg.reply "There are no people that have the 'admin' role."
+      
   robot.respond /who is @?([\w .\-]+)\?*$/i, (msg) ->
     joiner = ', '
     name = msg.match[1].trim()
