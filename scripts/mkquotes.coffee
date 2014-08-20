@@ -8,4 +8,4 @@ module.exports = (robot) ->
   robot.hear /I like pie/i, (msg) ->
     msg.emote "makes a freshly baked pie"
 
-  #test
+  #removedTest
