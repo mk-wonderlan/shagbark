@@ -17,3 +17,4 @@ module.exports = (robot) ->
     msg.emote "makes a freshly baked pie"
 
   #removedTest
+  #test
