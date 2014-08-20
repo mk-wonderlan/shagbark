@@ -59,7 +59,7 @@ module.exports = (robot) ->
 
   robot.auth = new Auth
 
-  robot.respond /@?(.+) is (["'\w: -_]+)/i, (msg) ->
+  robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
       name    = msg.match[1].trim()
       newRole = msg.match[3].trim().toLowerCase()
 
@@ -79,7 +79,7 @@ module.exports = (robot) ->
               user.roles.push(newRole)
               msg.reply "Ok, #{name} is '#{newRole}'."
 
-  robot.respond /@?(.+) (is not) (["'\w: -_]+)/i, (msg) ->
+  robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
       name    = msg.match[1].trim()
       newRole = msg.match[3].trim().toLowerCase()
 
