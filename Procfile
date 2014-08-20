@@ -1,1 +1,1 @@
-app: bin/hubot -a irc --name shagbark
+web: bin/hubot -a irc --name shagbark
