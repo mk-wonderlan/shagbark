@@ -69,7 +69,7 @@ module.exports = (robot) ->
         user.roles or= []
 
         if newRole in user.roles
-          msg.reply "#{name} already is '#{newRole}'."
+          msg.reply "#{name} already is #{newRole}."
         else
           if newRole is 'admin'
             msg.reply "Sorry, the 'admin' role can only be defined in the HUBOT_AUTH_ADMIN env variable."
@@ -77,7 +77,7 @@ module.exports = (robot) ->
             myRoles = msg.message.user.roles or []
             if msg.message.user.id.toString() in admins
               user.roles.push(newRole)
-              msg.reply "Ok, #{name} is '#{newRole}'."
+              msg.reply "Ok, #{name} is #{newRole}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
       name    = msg.match[1].trim()
@@ -94,7 +94,7 @@ module.exports = (robot) ->
           myRoles = msg.message.user.roles or []
           if msg.message.user.id.toString() in admins
             user.roles = (role for role in user.roles when role isnt newRole)
-            msg.reply "Ok, #{name} isn't '#{newRole}'."
+            msg.reply "Ok, #{name} isn't #{newRole}."
 
   robot.respond /(what role does|what roles does) @?(.+) (have)\?*$/i, (msg) ->
     name = msg.match[2].trim()
