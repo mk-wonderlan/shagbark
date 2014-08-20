@@ -60,41 +60,49 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-      name    = msg.match[1].trim()
-      newRole = msg.match[2].trim().toLowerCase()
+    name    = msg.match[1].trim()
+    newRole = msg.match[2].trim()
 
-      unless name.toLowerCase() in ['', 'who', 'what', 'where', 'when', 'why']
-        user = robot.brain.userForName(name)
-        return msg.reply "#{name} does not exist" unless user?
-        user.roles or= []
+    unless name in ['', 'who', 'what', 'where', 'when', 'why']
+      unless newRole.match(/^not\s+/i)
+        users = robot.brain.usersForFuzzyName(name)
+        if users.length is 1
+          user = users[0]
+          user.roles = user.roles or [ ]
 
-        if newRole in user.roles
-          msg.reply "#{name} already is #{newRole}."
-        else
-          if newRole is 'admin'
-            msg.reply "Sorry, the 'admin' role can only be defined in the HUBOT_AUTH_ADMIN env variable."
+          if newRole in user.roles
+            msg.send "I know"
           else
-            myRoles = msg.message.user.roles or []
-            if msg.message.user.id.toString() in admins
-              user.roles.push(newRole)
-              msg.reply "Ok, #{name} is #{newRole}."
+            user.roles.push(newRole)
+            if name.toLowerCase() is robot.name.toLowerCase()
+              msg.send "Ok, I am #{newRole}."
+            else
+              msg.send "Ok, #{name} is #{newRole}."
+              else if users.length > 1
+                msg.send getAmbiguousUserText users
+              else
+                msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
-      name    = msg.match[1].trim()
-      newRole = msg.match[2].trim().toLowerCase()
+    name    = msg.match[1].trim()
+    newRole = msg.match[2].trim()
 
-      unless name.toLowerCase() in ['', 'who', 'what', 'where', 'when', 'why']
-        user = robot.brain.userForName(name)
-        return msg.reply "#{name} does not exist" unless user?
-        user.roles or= []
+    unless name in ['', 'who', 'what', 'where', 'when', 'why']
+      users = robot.brain.usersForFuzzyName(name)
+      if users.length is 1
+        user = users[0]
+        user.roles = user.roles or [ ]
 
-        if newRole is 'admin'
-          msg.reply "Sorry, the 'admin' role can only be removed from the HUBOT_AUTH_ADMIN env variable."
+        if newRole not in user.roles
+          msg.send "I know."
         else
-          myRoles = msg.message.user.roles or []
-          if msg.message.user.id.toString() in admins
-            user.roles = (role for role in user.roles when role isnt newRole)
-            msg.reply "Ok, #{name} isn't #{newRole}."
+          user.roles = (role for role in user.roles when role isnt newRole)
+          msg.send "Ok, #{name} is no longer #{newRole}."
+          else if users.length > 1
+            msg.send getAmbiguousUserText users
+          else
+            msg.send "I don't know anything about #{name}."
+
 
   robot.respond /(what role does|what roles does) @?(.+) (have)\?*$/i, (msg) ->
     name = msg.match[2].trim()
