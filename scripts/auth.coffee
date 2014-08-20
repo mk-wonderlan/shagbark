@@ -30,6 +30,9 @@
 
 module.exports = (robot) ->
 
+  getAmbiguousUserText = (users) ->
+    "Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
+
   unless process.env.HUBOT_AUTH_ADMIN?
     robot.logger.warning 'The HUBOT_AUTH_ADMIN environment variable not set'
 
@@ -55,7 +58,7 @@ module.exports = (robot) ->
       users
 
     isFriend: (user) ->
-      return hasRole(user,'shagbarks friend')
+      return robot.auth.hasRole(user,'shagbarks friend')
 
   robot.auth = new Auth
 
