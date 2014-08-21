@@ -4,4 +4,4 @@ module.exports = (robot) ->
       rnd = Math.floor(Math.random() * 20)
       msg.http("http://api.tumblr.com/v2/tagged/?tag=alpaca&api_key=Vfbj0WK0KV2DiOa83X4alREVgTkItGvdj0fcccFRHvOyHIKECz")
         .get() (err, res, body) ->
-          msg.send JSON.parse(body).response[rnd].photos.original_size[0].url
+          msg.send "[DEBUG]" + JSON.parse(body).response[0].photos.original_size.url
