@@ -27,4 +27,4 @@ module.exports = (robot) ->
 			#user = msg.envelope.user
 			#user.email = msg.matches[1]
 			#msg.emote "notes down " + msg.envelope.user + "s email"
-			msg.emote "[DEBUG] " + msg.matches[0]
+			msg.emote "[DEBUG] " + msg.matches[1]

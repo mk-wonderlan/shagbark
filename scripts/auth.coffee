@@ -63,7 +63,7 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if robot.auth.hasRole('admin')
+    if robot.auth.hasRole(msg.envelope.user,'admin')
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
@@ -88,7 +88,7 @@ module.exports = (robot) ->
             msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if robot.auth.hasRole('admin')
+    if robot.auth.hasRole(msg.envelope.user,'admin')
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
