@@ -26,5 +26,5 @@ module.exports = (robot) ->
 		users = robot.brain.usersForFuzzyName(msg.envelope.user)
 		if users.length is 1
 			user = users[0]
-			user.email = msg.matches[1]
+			user.email = msg.matches[0]
 			msg.emote "notes down " + msg.envelope.user + "s email"
