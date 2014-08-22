@@ -9,20 +9,8 @@ module.exports = (robot) ->
 			mail.Subject = "Hello from PostMark"
 			mail.TextBody = "Hello!"
 			mail.Tag = "test"
-			response = ""
-			response += mail.From
-			response += "\n"
-			response += mail.To
-			response += "\n"
-			response += mail.Subject
-			response += "\n"
-			response += mail.TextBody
-			response += "\n"
-			response += mail.Tag
-			msg.reply response
-		#	postmark.send mail, (error, success) ->
-			  #	if error
-			    #	console.error "Unable to send via postmark: " + error.message
-			    #	return
-			  	#console.info "Sent to postmark for delivery"
-			  	#return
+			postmark.send mail, (error, success) ->
+			  	if error
+			    	msg.reply "Unable to send via postmark: " + error.message
+					else
+			  	msg.reply "Sent to postmark for delivery"
