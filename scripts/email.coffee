@@ -1,4 +1,4 @@
-postmark = require 'postmark', process.env.c3809d30-f23a-49bc-b1e6-36775d6b4583
+postmark = require 'postmark', process.env.POSTMARK_API_KEY
 
 module.exports = (robot) ->
 	robot.respond /(?:email |mail )((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
