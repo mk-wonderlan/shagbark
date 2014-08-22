@@ -10,16 +10,17 @@ Util = require "util"
 
 module.exports = (robot) ->
   robot.respond /show storage$/i, (msg) ->
-    output = Util.inspect(robot.brain.data, false, 4)
-    msg.send output
+    if robot.auth.hasRole(msg.envelope.user,'shagbarks friend')
+      output = Util.inspect(robot.brain.data, false, 4)
+      msg.send output
 
   robot.respond /show users$/i, (msg) ->
-    response = ""
+    if robot.auth.hasRole(msg.envelope.user,'shagbarks friend')
+      response = ""
 
-    for own key, user of robot.brain.data.users
-      response += "#{user.id} #{user.name}"
-      response += " <#{user.email_address}>" if user.email_address
-      response += "\n"
+      for own key, user of robot.brain.data.users
+        response += "#{user.id} #{user.name}"
+        response += " <#{user.email_address}>" if user.email_address
+        response += "\n"
 
-    msg.send response
-
+      msg.send response
