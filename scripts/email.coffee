@@ -23,9 +23,7 @@ module.exports = (robot) ->
 
 			  	msg.reply "Email sent to " + mail.To
 
-	robot.respond /my email is ((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
-		users = robot.brain.usersForFuzzyName(msg.envelope.user.id)
-		if users.length is 1
-			user = users[0]
-			user.email = msg.matches[0]
+	robot.respond /my (?:email |mail) is ((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
+			user = msg.envelope.user
+			user.email = msg.matches[1]
 			msg.emote "notes down " + msg.envelope.user + "s email"
