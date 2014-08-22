@@ -68,6 +68,12 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
+    response = ""
+    response += "[DEBUG]: userId: " + msg.envelope.user.id + "\n"
+    response += "[DEBUG]: name: " + msg.match[1].trim() +"\n"
+    response += "[DEBUG]: newRole" + msg.match[2].trim() +"\n"
+    response += "[DEBUG]: callerIsAdmin" + robot.auth.userIsAdmin(msg.envelope.user)
+    msg.send response
     if robot.auth.userIsAdmin(msg.envelope.user)
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
