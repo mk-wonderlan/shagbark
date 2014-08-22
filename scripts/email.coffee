@@ -13,4 +13,4 @@ module.exports = (robot) ->
 			  	if error
 			    	msg.reply "Unable to send via postmark: " + error.message
 					else
-			  	msg.reply "Sent to postmark for delivery"
+			  		msg.reply "Sent to postmark for delivery"
