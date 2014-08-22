@@ -62,22 +62,12 @@ module.exports = (robot) ->
     isFriend: (user) ->
       return robot.auth.hasRole(user,'shagbarks friend')
 
-    userIsAdmin: (user) ->
-      return true if user.id in admins
-
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    response = ""
-    response += "[DEBUG]: userId: " + msg.envelope.user.id + "\n"
-    response += "[DEBUG]: name: " + msg.match[1].trim() +"\n"
-    response += "[DEBUG]: newRole" + msg.match[2].trim() +"\n"
-  #  response += "[DEBUG]: callerIsAdmin" + robot.auth.userIsAdmin(msg.envelope.user)
-    msg.send response
-    if robot.auth.userIsAdmin(msg.envelope.user)
+    if admins.contains(msg.envelope.user.id)
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
-      msg.send "[DEBUG] name: " +name +" new role: "+newRole
 
       unless name in ['', 'who', 'what', 'where', 'when', 'why']
         unless newRole.match(/^not\s+/i)
@@ -100,7 +90,7 @@ module.exports = (robot) ->
             msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if robot.auth.userIsAdmin(msg.envelope.user)
+    if msg.envelope.user.id in admins
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
