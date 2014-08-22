@@ -32,6 +32,8 @@ module.exports = (robot) ->
 
   getAmbiguousUserText = (users) ->
     "Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
+  Array.prototype.contains = (element) ->
+    return this.indexOf(element) > -1;
 
   unless process.env.HUBOT_AUTH_ADMIN?
     robot.logger.warning 'The HUBOT_AUTH_ADMIN environment variable not set'
@@ -60,10 +62,13 @@ module.exports = (robot) ->
     isFriend: (user) ->
       return robot.auth.hasRole(user,'shagbarks friend')
 
+    userIsAdmin: (user) ->
+      return true if user.id in admins
+
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user,'admin')
+    if robot.auth.userIsAdmin(msg.envelope.user)
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
@@ -88,7 +93,7 @@ module.exports = (robot) ->
             msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user,'admin')
+    if robot.auth.userIsAdmin(msg.envelope.user)
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
