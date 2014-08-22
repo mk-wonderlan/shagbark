@@ -24,7 +24,7 @@ module.exports = (robot) ->
 			  	msg.reply "Email sent to " + mail.To
 
 	robot.respond /my (?:email|mail) is ((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
-			user = msg.envelope.user
+			#user = msg.envelope.user
 			#user.email = msg.matches[1]
 			#msg.emote "notes down " + msg.envelope.user + "s email"
-			msg.emote "[DEBUG] " + msg.matches[1]
+			msg.emote "[DEBUG] " + msg.matches[0]
