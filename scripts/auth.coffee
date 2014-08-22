@@ -71,6 +71,7 @@ module.exports = (robot) ->
     if robot.auth.userIsAdmin(msg.envelope.user)
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
+      msg.send "[DEBUG] name: " +name +" new role: "+newRole
 
       unless name in ['', 'who', 'what', 'where', 'when', 'why']
         unless newRole.match(/^not\s+/i)
