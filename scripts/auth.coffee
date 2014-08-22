@@ -72,7 +72,7 @@ module.exports = (robot) ->
     response += "[DEBUG]: userId: " + msg.envelope.user.id + "\n"
     response += "[DEBUG]: name: " + msg.match[1].trim() +"\n"
     response += "[DEBUG]: newRole" + msg.match[2].trim() +"\n"
-    response += "[DEBUG]: callerIsAdmin" + robot.auth.userIsAdmin(msg.envelope.user)
+  #  response += "[DEBUG]: callerIsAdmin" + robot.auth.userIsAdmin(msg.envelope.user)
     msg.send response
     if robot.auth.userIsAdmin(msg.envelope.user)
       name    = msg.match[1].trim()
