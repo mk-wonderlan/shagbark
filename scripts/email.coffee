@@ -20,6 +20,5 @@ module.exports = (robot) ->
 			postmark.send mail, (err, to) ->
 			  	if err
 			    	msg.reply "Unable to send via postmark: " + error.message
-						return
 
-			  	msg.reply "Email sent to " +to
+			  	msg.reply "Email sent to " + to
