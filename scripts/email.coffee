@@ -22,6 +22,7 @@ module.exports = (robot) ->
 			    	msg.reply "Unable to send via postmark: " + error.message
 
 			  	msg.reply "Email sent to " + mail.To
+					
 	robot.respond /my email is ((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
 		users = robot.brain.usersForFuzzyName(msg.envelope.user)
 		if users.length is 1
