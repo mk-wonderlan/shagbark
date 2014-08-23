@@ -65,6 +65,7 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
+    msg.send "Something fucking happened atleast..."
     name    = msg.match[1].trim()
     newRole = msg.match[2].trim()
 
