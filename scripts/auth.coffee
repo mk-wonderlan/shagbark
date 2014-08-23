@@ -65,7 +65,6 @@ module.exports = (robot) ->
   robot.auth = new Auth
 
   robot.respond /@?([\w .\-_]+) is (["'\w: \-_]+)[.!]*$/i, (msg) ->
-    if msg.envelope.user.id.toString() in admins
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
@@ -90,7 +89,7 @@ module.exports = (robot) ->
             msg.send "I don't know anything about #{name}."
 
   robot.respond /@?([\w .\-_]+) is not (["'\w: \-_]+)[.!]*$/i, (msg) ->
-      msg.send msg.envelope.user.id.toString() in admins
+    if msg.envelope.user.id.toString() in admins
       name    = msg.match[1].trim()
       newRole = msg.match[2].trim()
 
