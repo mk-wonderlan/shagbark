@@ -24,6 +24,7 @@ module.exports = (robot) ->
 			  	msg.reply "Email sent to " + mail.To
 
 	robot.respond /(?:my email is )((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))/i, (msg) ->
-			user = robot.brain.usersForFuzzyName(msg.envelope.user.id)
-			user.email = msg.matches[1]
-			msg.emote "notes down " + msg.envelope.user
+			msg.send msg.matches[1]
+			#user = robot.brain.userForId(msg.envelope.user.id)
+			#user.email = msg.matches[1]
+			#msg.emote "notes down " + msg.envelope.user.id + "s email"
