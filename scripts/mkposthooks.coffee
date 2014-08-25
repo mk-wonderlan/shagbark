@@ -13,3 +13,7 @@ module.exports = (robot) ->
     data = {"message": msg.match[1]}
     msg.http("http://webdump.shagbark.ninja/ircmessage")
       .post(data) (err, res, body) ->
+        console.log(err)
+        console.log(res)
+        console.log(body)
+        msg.send err
