@@ -10,7 +10,7 @@ module.exports = (robot) ->
 
   robot.respond /(.*)/i, (msg) ->
 
-    data = {"message": msg.match[1]}
+    data = '{"message": msg.match[1]}'
 
     msg.http("http://webdump.shagbark.ninja/ircmessage")
     .headers('Content-Type': 'application/json')
