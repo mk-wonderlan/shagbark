@@ -8,12 +8,10 @@ module.exports = (robot) ->
     user.room = "#mammaskallare"
     robot.send user, "Now Playing: #{push.song} by #{push.artist} from album '#{push.album}'"
 
-  robot.respond /(.*)/ , (msg) ->
+  robot.respond /(.*)/i, (msg) ->
 
     data = {"message": msg.match[1]}
     msg.http("http://webdump.shagbark.ninja/ircmessage")
+      .headers('Content-Type': 'application/json')
       .post(data) (err, res, body) ->
-        console.log(err)
-        console.log(res)
-        console.log(body)
-        msg.send err
+        msg.send "I did something!"
