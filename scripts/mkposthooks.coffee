@@ -11,8 +11,8 @@ module.exports = (robot) ->
   robot.respond /(.*)/i, (msg) ->
 
     data = {"message": msg.match[1]}
-    msg.send data.message
-  #  msg.http("http://webdump.shagbark.ninja/ircmessage")
-    #  .headers('Content-Type': 'application/json')
-      #.post(data) (err, res, body) ->
-      #  msg.send "I did something!"
+
+    msg.http("http://webdump.shagbark.ninja/ircmessage")
+    .headers('Content-Type': 'application/json')
+    .post(data) (err, res, body) ->
+      msg.send err
