@@ -7,3 +7,9 @@ module.exports = (robot) ->
     user = {}
     user.room = "#mammaskallare"
     robot.send user, "Now Playing: #{push.song} by #{push.artist} from album '#{push.album}'"
+
+  robot.respond /(.*)/ , (msg) ->
+
+    data = {"message": msg.match[1]}
+    msg.http("http://webdump.shagbark.ninja/ircmessage")
+      .post(data) (err, res, body) ->
