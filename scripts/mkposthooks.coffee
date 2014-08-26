@@ -1,3 +1,5 @@
+requestify = require('requestify');
+
 module.exports = (robot) ->
 
   robot.router.post "/shagbark/music", (req, res) ->
@@ -10,11 +12,8 @@ module.exports = (robot) ->
 
   robot.respond /(.*)/i, (msg) ->
 
-    data = querystring.stringify({"message": msg.match[1]})
-    options = {host:'webdump.shagbark.ninja',port: '80',path: '/ircmessage',method: 'POST',headers: {'Content-Type': 'application/json','Content-Length': data.length}};
-    request = http.request(options)
-    request.write(data);
-    request.end();
+    requestify.post('http://webdump.shagbark.ninja', {message: msg.match[1]},{dataType: 'json'})
+
 
 
   #  msg.http("http://webdump.shagbark.ninja/ircmessage")
