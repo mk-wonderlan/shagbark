@@ -10,9 +10,14 @@ module.exports = (robot) ->
 
   robot.respond /(.*)/i, (msg) ->
 
-    data = {"message": msg.match[1]}
+    data = querystring.stringify({"message": msg.match[1]})
+    options = {host:'webdump.shagbark.ninja',port: '80',path: '/ircmessage',method: 'POST',headers: {'Content-Type': 'application/json','Content-Length': data.length}};
+    request = http.request(options)
+    request.write(data);
+    request.end();
 
-    msg.http("http://webdump.shagbark.ninja/ircmessage")
-    .headers('Content-Type': 'application/json')
-    .post(JSON.Stringify(data)) (err, res, body) ->
-      msg.send err
+
+  #  msg.http("http://webdump.shagbark.ninja/ircmessage")
+  #  .headers('Content-Type': 'application/json')
+  #  .post(JSON.Stringify(data)) (err, res, body) ->
+    #  msg.send err
